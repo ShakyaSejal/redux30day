@@ -1,46 +1,155 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom';
 
-const Form = ({type}) => {
+    const Form = ({ type, onSubmit }) => {
+        const [data, setData] = useState({
+          email: "",
+          username: "",
+          password: "",
+        
+        });
+      
+        const handleChange = (e) => {
+          const { name, value } = e.target;
+          setData({
+            ...data,
+            [name]: value,
+          });
+        };
+        const handleSubmit = (e) => {
+          e.preventDefault();
+          onSubmit(data);
+        };
   return (
-    <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
-    <div className="relative py-3 sm:max-w-xl sm:mx-auto">
-        <div
-            className="absolute inset-0 bg-gradient-to-r from-blue-300 to-blue-600 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl">
+ <>
+    <div className="flex min-h-full flex-col justify-center px-6 py-12">
+        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+          <img
+            className="mx-auto h-10 w-auto"
+            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+            alt="Your Company"
+          />
+          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+            {type === "Login"
+              ? "Login here to continue..."
+              : "Register here to continue..."}
+          </h2>
         </div>
-        <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
-            <div className="max-w-md mx-auto">
-                <div>
-                    <h1 className="text-2xl font-semibold">
-                        { type === 'Login' ? 'Login here to continue...' : 'Register here to continue...' }
-                    </h1>
-                </div>
-                <div className="divide-y divide-gray-200">
-                    <div className="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
-                        <div className="relative">
-                            <input autocomplete="off" id="email" name="email" type="text" className="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Email address" />
-                            <label for="email" className="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Email Address</label>
-                        </div>
-                   {
-                    type === 'Register' && (
-                        <div className="relative">
-                        <input autocomplete="off" id="username" name="username" type="text" className="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="username address" />
-                        <label for="username" className="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Username</label>
-                    </div>
-                    )
-                   }
-                        <div className="relative">
-                            <input autocomplete="off" id="password" name="password" type="password" className="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Password" />
-                            <label for="password" className="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Password</label>
-                        </div>
-                        <div className="relative">
-                            <button className="bg-blue-500 text-white rounded-md px-2 py-1">Submit</button>
-                        </div>
-                    </div>
-                </div>
+
+        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+          <form
+            className="space-y-6"
+            action="#"
+            method="POST"
+            onSubmit={handleSubmit}
+          >
+            <div>
+              <label
+                htmlFor="email" // <-- Change `for` to `htmlFor`
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Email address
+              </label>
+              <div className="mt-2">
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  autoComplete="email" // <-- Change `autocomplete` to `autoComplete`
+                  required
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  onChange={handleChange} 
+                />
+              </div>
             </div>
+            {type === "Register" && (
+              <div>
+                <label
+                  htmlFor="username" // <-- Change `for` to `htmlFor`
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Username
+                </label>
+                <div className="mt-2">
+                  <input
+                    id="username"
+                    name="username"
+                    type="text" // <-- Change `type="username"` to `type="text"`
+                    autoComplete="username" // <-- Change `autocomplete` to `autoComplete`
+                    required
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    onChange={handleChange} // <-- Correct
+                  />
+                </div>
+              </div>
+            )}
+            <div>
+              <div className="flex items-center justify-between">
+                <label
+                  htmlFor="password" // <-- Change `for` to `htmlFor`
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Password
+                </label>
+              </div>
+              <div className="mt-2">
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  autoComplete="current-password" // <-- Change `autocomplete` to `autoComplete`
+                  required
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  onChange={handleChange} // <-- Correct
+                />
+              </div>
+            </div>
+            {type === "Register" && (
+              <div>
+                <div className="flex items-center justify-between">
+                  <label
+                    htmlFor="ConfirmPassword" // <-- Change `for` to `htmlFor`
+                    className="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Confirm Password
+                  </label>
+                </div>
+                <div className="mt-2">
+                  <input
+                    id="ConfirmPassword"
+                    name="ConfirmPassword"
+                    type="password" // <-- Change `type="ConfirmPassword"` to `type="password"`
+                    autoComplete="current-password" // <-- Change `autocomplete` to `autoComplete`
+                    required
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    onChange={handleChange} // <-- Correct
+                  />
+                </div>
+              </div>
+            )}
+
+            <div>
+              <button
+                type="submit"
+                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              >
+                {type === "Login" ? "Sign in" : "Register"}
+              </button>
+            </div>
+          </form>
+
+          <p className="mt-10 text-center text-sm text-gray-500">
+            {type === "Login" ? "Don't have an account?" : "Already a member?"}
+            <Link
+              to={type === "Login" ? "/register" : "/login"}
+              className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+            >
+              {type === "Login" ? "Register" : "Login"}
+            </Link>
+          </p>
         </div>
-    </div>
-</div>
+      </div>
+ </>
   )
 }
 

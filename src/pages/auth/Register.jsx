@@ -1,10 +1,17 @@
-import React from 'react'
-import Form from './components/form/Form'
+import React from "react";
+import Form from "./components/form/Form"; 
+import { useDispatch } from "react-redux";
+import { register } from "../../../store/authSlice";
 
 const Register = () => {
-  return (
-    <Form type='Register'/>
-  )
-}
+  const dispatch = useDispatch();
+  const handleRegister = (data) => {
+    dispatch(register(data));
+  };
 
-export default Register
+  return (
+  <Form type="Register" onSubmit={handleRegister} />
+);
+};
+
+export default Register;
